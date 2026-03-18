@@ -16,6 +16,155 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Trading App</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ╔══════════════════════════════════════════════════════╗
+// ║  ВСТАВЬ СЮДА СВОИ SUPABASE НАСТРОЙКИ               ║
+// ║  supabase.com → Проект → Settings → API             ║
+// ╚══════════════════════════════════════════════════════╝
+const SUPABASE_URL    = 'https://iopqbqctzdrfxrzclxga.supabase.co';
+const SUPABASE_ANON   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcHFicWN0emRyZnhyemNseGdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MjYzNDAsImV4cCI6MjA4OTQwMjM0MH0.RWbbjoEKIuLeoI3xYEPchfZ0Qy4Ox22GCDSGO1lUCJQ';
+
+const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// device_id — постоянный анонимный идентификатор устройства
+(function(){
+  let id = localStorage.getItem('_device_id');
+  if(!id){ id = crypto.randomUUID(); localStorage.setItem('_device_id', id); }
+  window._deviceId = id;
+})();
+
+// ─── Статус ──────────────────────────────────────────
+async function sbInit(){
+  try {
+    // Проверяем соединение простым запросом
+    const { error } = await _sb.from('settings').select('id').limit(1);
+    const el = document.getElementById('fb-status');
+    if(error){ if(el){ el.textContent='⚠️'; el.title='Supabase: ' + error.message; } return; }
+    if(el){ el.textContent='☁️'; el.title='Supabase подключён'; }
+
+    // Загружаем данные
+    await sbLoadSettings();
+    await sbLoadDailyGoal();
+    await sbLoadTrades();
+
+    // Realtime подписка на сделки
+    _sb.channel('trades-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'trades', filter: `device_id=eq.${window._deviceId}` },
+        () => sbLoadTrades())
+      .subscribe();
+
+  } catch(e){ console.warn('sbInit error:', e); }
+}
+
+// ─── TRADES ───────────────────────────────────────────
+async function sbLoadTrades(){
+  const { data, error } = await _sb
+    .from('trades')
+    .select('*')
+    .eq('device_id', window._deviceId)
+    .order('created_at', { ascending: false });
+  if(error){ console.warn('sbLoadTrades:', error); return; }
+  trades = (data||[]).map(r => ({
+    _id: r.id, coin: r.coin, entry: r.entry, exit: r.exit,
+    size: r.size, pnl: r.pnl, pct: r.pct, res: r.res,
+    note: r.note, date: r.date
+  }));
+  // кэш
+  localStorage.setItem('tj', JSON.stringify(trades));
+  renderJournal(); updateJourneyBar(); updateDepPct();
+}
+
+window.fbAddTrade = async function(trade){
+  const { error } = await _sb.from('trades').insert({
+    device_id: window._deviceId,
+    coin: trade.coin, entry: trade.entry, exit: trade.exit,
+    size: trade.size, pnl: trade.pnl, pct: trade.pct,
+    res: trade.res, note: trade.note, date: trade.date
+  });
+  if(error) console.warn('fbAddTrade:', error);
+  await sbLoadTrades();
+};
+
+window.fbDeleteTrade = async function(id){
+  if(!id) return;
+  const { error } = await _sb.from('trades').delete().eq('id', id).eq('device_id', window._deviceId);
+  if(error) console.warn('fbDeleteTrade:', error);
+  await sbLoadTrades();
+};
+
+// ─── SETTINGS ────────────────────────────────────────
+window.fbSaveSettings = async function(){
+  const data = {
+    device_id:  window._deviceId,
+    j_dep:      document.getElementById('j-dep-input')?.value || '300',
+    g_dep:      document.getElementById('g-dep')?.value       || '300',
+    g_goal:     document.getElementById('g-goal')?.value      || '10000',
+    g_work:     document.getElementById('g-work')?.value      || '400',
+    g_dash:     document.getElementById('g-dash')?.value      || '200',
+    g_trade:    document.getElementById('g-trade')?.value     || '10',
+    s_salary:   document.getElementById('s-salary')?.value    || '2800',
+    s_dash:     document.getElementById('s-dash')?.value      || '600',
+    sw_rate:    document.getElementById('sw-rate')?.value     || '21',
+    sw_hours:   document.getElementById('sw-hours')?.value    || '8',
+    wd_days:    window.wdDays || 5,
+    updated_at: new Date().toISOString(),
+  };
+  const { error } = await _sb.from('settings').upsert(data, { onConflict: 'device_id' });
+  if(error) console.warn('fbSaveSettings:', error);
+};
+
+window.fbLoadSettings = async function(){};  // вызывается из sbLoadSettings
+async function sbLoadSettings(){
+  const { data, error } = await _sb.from('settings').select('*').eq('device_id', window._deviceId).single();
+  if(error || !data) return;
+  const set = (id, val) => { const el = document.getElementById(id); if(el && val != null) el.value = val; };
+  set('j-dep-input', data.j_dep); set('g-dep', data.g_dep); set('g-goal', data.g_goal);
+  set('g-work', data.g_work);     set('g-dash', data.g_dash); set('g-trade', data.g_trade);
+  set('s-salary', data.s_salary); set('s-dash', data.s_dash);
+  set('sw-rate', data.sw_rate);   set('sw-hours', data.sw_hours);
+  if(data.wd_days){
+    window.wdDays = data.wd_days;
+    [4,5,6].forEach(x => { const el = document.getElementById('wd-'+x); if(el) el.classList.toggle('active-p', x === data.wd_days); });
+  }
+  setTimeout(() => { calcGoal(); calcBudget(); calcSalary(); updateDG(); updateDepPct(); updateJourneyBar(); }, 50);
+}
+
+// ─── DAILY GOAL ──────────────────────────────────────
+window.fbSaveDailyGoal = async function(){
+  const today  = new Date().toISOString().slice(0,10);
+  const target = document.getElementById('dg-target')?.value || '10';
+  const earned = document.getElementById('dg-earned')?.value || '0';
+  const { error } = await _sb.from('daily_goal').upsert(
+    { device_id: window._deviceId, date: today, target, earned, updated_at: new Date().toISOString() },
+    { onConflict: 'device_id,date' }
+  );
+  if(error) console.warn('fbSaveDailyGoal:', error);
+};
+
+async function sbLoadDailyGoal(){
+  const today = new Date().toISOString().slice(0,10);
+  const { data, error } = await _sb.from('daily_goal').select('*')
+    .eq('device_id', window._deviceId).eq('date', today).single();
+  if(error || !data) return;
+  const el_t = document.getElementById('dg-target');
+  const el_e = document.getElementById('dg-earned');
+  if(el_t) el_t.value = data.target || '10';
+  if(el_e) el_e.value = data.earned || '0';
+  updateDG();
+}
+
+// ─── Дебаунс ─────────────────────────────────────────
+let _settingsTimer = null;
+window.fbSaveSettingsDebounced = function(){
+  clearTimeout(_settingsTimer);
+  _settingsTimer = setTimeout(() => { fbSaveSettings(); fbSaveDailyGoal(); }, 800);
+};
+
+// Запуск после загрузки DOM
+document.addEventListener('DOMContentLoaded', sbInit);
+</script>
 <style>
 :root{
   --bg:#0b0e11;
@@ -1274,6 +1423,7 @@ html,body{background:#0b0e11 !important;color:var(--t1);font-family:'DM Sans',sa
     <div class="bnav-label">Инструм.</div>
     <div class="bnav-dot"></div>
   </div>
+  <div id="fb-status" title="Подключение к Firebase..." style="position:absolute;top:5px;right:8px;font-size:.7rem;opacity:.35;cursor:default;pointer-events:none">⏳</div>
 </div>
 
 <script>
@@ -1437,6 +1587,7 @@ function tick(){
 tick();setInterval(tick,1000);
 
 // ---- JOURNAL ----
+// trades инициализируется из localStorage как кэш; Firebase перезапишет через onSnapshot
 let trades = JSON.parse(localStorage.getItem('tj')||'[]');
 let jRes = 'WIN';
 const BASE_DEP = 300;
@@ -1471,7 +1622,7 @@ function calcPnl(){
   ep.style.color=pnl>=0?'var(--green)':'var(--red)';
 }
 
-function saveTrade(){
+async function saveTrade(){
   const coin=document.getElementById('j-coin').value.trim()||'???';
   const entry=parseFloat(document.getElementById('j-entry').value)||0;
   const exit=parseFloat(document.getElementById('j-exit').value)||0;
@@ -1481,13 +1632,30 @@ function saveTrade(){
   const pnl=entry&&exit?size*(pct/100):0;
   const d=new Date();
   const date=d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
-  trades.unshift({coin:coin.toUpperCase(),entry,exit,size,pnl:parseFloat(pnl.toFixed(2)),pct:parseFloat(pct.toFixed(2)),res:jRes,note,date});
-  localStorage.setItem('tj',JSON.stringify(trades));
+  const trade={coin:coin.toUpperCase(),entry,exit,size,pnl:parseFloat(pnl.toFixed(2)),pct:parseFloat(pct.toFixed(2)),res:jRes,note,date};
+
+  // Firestore — добавляем (onSnapshot обновит UI автоматически)
+  if(window.fbAddTrade){
+    await window.fbAddTrade(trade);
+  } else {
+    // Фолбэк: localStorage (пока Firebase не подключён)
+    trades.unshift(trade);
+    localStorage.setItem('tj',JSON.stringify(trades));
+    renderJournal();
+  }
   closeModal();
-  renderJournal();
 }
 
-function deleteTrade(i){trades.splice(i,1);localStorage.setItem('tj',JSON.stringify(trades));renderJournal();}
+function deleteTrade(i){
+  const trade = trades[i];
+  if(trade && trade._id && window.fbDeleteTrade){
+    window.fbDeleteTrade(trade._id); // onSnapshot обновит UI
+  } else {
+    trades.splice(i,1);
+    localStorage.setItem('tj',JSON.stringify(trades));
+    renderJournal();
+  }
+}
 
 function renderJournal(){
   const total=trades.length;
@@ -1965,7 +2133,7 @@ function updateDG(){
   if(earnedInput&&earned>0)earnedInput.style.color='var(--green)';
 }
 
-// ---- PERSIST ----
+// ---- PERSIST (Firebase + localStorage fallback) ----
 const DB_KEY='tradingapp_v2';
 function saveAll(){
   const data={
@@ -1983,7 +2151,10 @@ function saveAll(){
     dgTarget:document.getElementById('dg-target')?.value||'10',
     dgEarned:document.getElementById('dg-earned')?.value||'0',
   };
+  // Всегда сохраняем в localStorage как быстрый кэш
   localStorage.setItem(DB_KEY,JSON.stringify(data));
+  // Сохраняем в Firebase (дебаунс 800ms)
+  if(window.fbSaveSettingsDebounced) window.fbSaveSettingsDebounced();
 }
 function loadAll(){
   try{
