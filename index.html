@@ -9,117 +9,136 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
   --bg: #0f1117; --card: #1a1d27; --card2: #222536; --border: rgba(255,255,255,0.07);
-  --green: #22c55e; --green-dim: rgba(34,197,94,0.12); --red: #ef4444; --red-dim: rgba(239,68,68,0.12);
-  --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.12); --yellow: #f59e0b; --yellow-dim: rgba(245,158,11,0.12);
-  --text: #f1f5f9; --muted: #64748b; --muted2: #94a3b8; --font: 'Nunito', sans-serif;
-  --r: 16px; --r-sm: 10px; --r-lg: 22px;
+  --green: #22c55e; --green-dim: rgba(34,197,94,0.12);
+  --red: #ef4444;   --red-dim: rgba(239,68,68,0.12);
+  --blue: #3b82f6;  --blue-dim: rgba(59,130,246,0.12);
+  --yellow: #f59e0b;--yellow-dim: rgba(245,158,11,0.12);
+  --purple:#a855f7; --purple-dim:rgba(168,85,247,0.12);
+  --orange:#f97316; --orange-dim:rgba(249,115,22,0.12);
+  --text: #f1f5f9; --muted: #64748b; --muted2: #94a3b8;
+  --font: 'Nunito', sans-serif; --r: 16px; --r-sm: 10px; --r-lg: 22px;
 }
-html, body { background: var(--bg); font-family: var(--font); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-.phone { max-width: 420px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 84px; }
-.status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px 4px; }
-.status-time { font-size: 15px; font-weight: 900; color: var(--text); }
-.status-icons { display: flex; gap: 6px; align-items: center; }
-.sig { display: flex; gap: 2px; align-items: flex-end; }
-.sig span { background: var(--muted2); border-radius: 1px; width: 3px; }
-.sig span:nth-child(1){height:4px} .sig span:nth-child(2){height:7px} .sig span:nth-child(3){height:10px} .sig span:nth-child(4){height:13px}
-.wifi-icon { font-size: 12px; color: var(--muted2); font-weight: 800; }
-.battery { width: 22px; height: 11px; border: 1.5px solid var(--muted2); border-radius: 2px; position: relative; padding: 1.5px; }
-.battery::after { content:''; position:absolute; right:-5px; top:50%; transform:translateY(-50%); width:3px; height:5px; background:var(--muted2); border-radius:0 2px 2px 0; }
-.batt-fill { background: var(--muted2); border-radius: 1px; height: 100%; width: 70%; }
-.app-header { padding: 10px 20px 8px; display: flex; align-items: center; justify-content: space-between; }
-.app-name { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
-.app-name span { color: var(--green); }
-.header-badge { background: var(--green-dim); color: var(--green); font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; }
-.content { flex: 1; overflow-y: auto; padding: 0 14px; -webkit-overflow-scrolling: touch; }
-.content::-webkit-scrollbar { display: none; }
-.section { display: none; }
-.section.active { display: block; animation: up 0.2s ease; }
-@keyframes up { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-.card { background: var(--card); border-radius: var(--r-lg); padding: 16px; margin-bottom: 10px; border: 1px solid var(--border); }
-.card-label { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 9px; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 9px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 10px; font-weight: 700; color: var(--muted2); }
-input[type=number], input[type=text], select {
-  background: var(--card2); border: 1.5px solid var(--border); border-radius: var(--r-sm);
-  padding: 10px 11px; color: var(--text); font-family: var(--font); font-size: 13px; font-weight: 700;
-  outline: none; width: 100%; transition: border-color 0.15s; -moz-appearance: textfield;
-}
-input:focus, select:focus { border-color: var(--blue); }
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
-select option { background: var(--card2); }
-.div { border: none; border-top: 1px solid var(--border); margin: 11px 0; }
-.tiles2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.tiles3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.tile { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 13px; }
-.t-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.t-val { font-size: 20px; font-weight: 900; line-height: 1; }
-.t-val.sm { font-size: 15px; }
-.cg{color:var(--green)} .cr{color:var(--red)} .cb{color:var(--blue)} .cy{color:var(--yellow)}
-.pill { display:inline-flex; align-items:center; font-size:11px; font-weight:800; padding:3px 9px; border-radius:20px; }
-.pg{background:var(--green-dim);color:var(--green)} .pr{background:var(--red-dim);color:var(--red)}
-.pb{background:var(--blue-dim);color:var(--blue)} .py{background:var(--yellow-dim);color:var(--yellow)}
-.ibox { border-radius: var(--r-sm); padding: 11px 13px; font-size: 12px; font-weight: 600; line-height: 1.5; margin-bottom: 10px; }
-.ib-g{background:var(--green-dim);color:var(--green)} .ib-r{background:var(--red-dim);color:var(--red)}
-.ib-b{background:var(--blue-dim);color:var(--blue)} .ib-y{background:var(--yellow-dim);color:var(--yellow)}
-.prog { height: 6px; background: var(--card2); border-radius: 3px; overflow: hidden; margin-top: 7px; }
-.prog-f { height: 100%; border-radius: 3px; transition: width 0.4s; }
-.btn-main { width:100%; background:var(--blue); color:#fff; border:none; border-radius:var(--r-sm); padding:13px; font-family:var(--font); font-size:14px; font-weight:800; cursor:pointer; transition:opacity .15s,transform .1s; margin-top:6px; }
-.btn-main:active { opacity:.85; transform:scale(.98); }
-.btn-del { background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; padding:4px; }
-.btn-del:active { color:var(--red); }
-table { width:100%; border-collapse:collapse; font-size:12px; }
-th { text-align:left; color:var(--muted); font-weight:700; font-size:10px; letter-spacing:.8px; text-transform:uppercase; padding:5px 7px; border-bottom:1px solid var(--border); }
-td { padding:9px 7px; border-bottom:1px solid var(--border); font-weight:600; }
-tr:last-child td { border-bottom:none; }
-.sess-row { display:flex; align-items:flex-start; gap:10px; background:var(--card2); border-radius:var(--r-sm); padding:11px 12px; margin-bottom:8px; border:1.5px solid var(--border); transition:border-color .3s; }
-.sess-row.on { border-color:rgba(34,197,94,.3); }
-.sess-row.warn { border-color:rgba(239,68,68,.3); }
-.sess-icon { font-size:20px; flex-shrink:0; padding-top:1px; }
-.sess-info { flex:1; min-width:0; }
-.sess-name { font-size:13px; font-weight:800; margin-bottom:2px; }
-.sess-time { font-size:11px; color:var(--muted2); font-weight:600; }
-.sess-desc { font-size:11px; color:var(--muted); margin-top:3px; font-weight:600; line-height:1.4; }
-.clock-big { font-size:38px; font-weight:900; letter-spacing:-1px; line-height:1; }
-.clock-date { font-size:12px; font-weight:700; color:var(--muted2); margin-top:3px; margin-bottom:14px; }
-.tax-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:13px; font-weight:600; }
-.tax-row:last-child { border-bottom:none; }
-.tax-lbl { color:var(--muted2); }
-.tax-val { color:var(--red); font-weight:800; }
-.tax-pct { color:var(--muted); font-size:11px; font-weight:700; margin-right:6px; }
-.tax-row.ttl .tax-lbl { color:var(--text); font-weight:800; font-size:14px; }
-.tax-row.ttl .tax-val { font-size:16px; }
-.section-title { font-size:17px; font-weight:900; margin-bottom:12px; letter-spacing:-.3px; }
-.quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:10px; }
-.qcard { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:16px 14px; cursor:pointer; transition:transform .12s,background .12s; display:flex; flex-direction:column; gap:7px; }
-.qcard:active { transform:scale(.97); background:var(--card2); }
-.qc-icon { font-size:24px; }
-.qc-name { font-size:14px; font-weight:800; }
-.qc-desc { font-size:11px; color:var(--muted2); font-weight:600; line-height:1.4; }
-.bottom-nav { position:fixed; bottom:0; left:0; right:0; max-width:420px; margin:0 auto; background:rgba(15,17,23,.96); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-top:1px solid var(--border); display:flex; padding:6px 0 calc(6px + env(safe-area-inset-bottom)); z-index:100; }
-.nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0; cursor:pointer; transition:all .15s; border:none; background:none; color:var(--muted); font-family:var(--font); }
-.nav-btn.active { color:var(--green); }
-.nav-ico { font-size:19px; }
-.nav-lbl { font-size:9px; font-weight:800; letter-spacing:.3px; }
-.nav-dot { width:4px; height:4px; border-radius:50%; background:var(--green); margin-top:1px; }
+html,body{background:var(--bg);font-family:var(--font);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.phone{max-width:420px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:84px;}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 4px;}
+.status-time{font-size:15px;font-weight:900;color:var(--text);}
+.status-icons{display:flex;gap:6px;align-items:center;}
+.sig{display:flex;gap:2px;align-items:flex-end;}
+.sig span{background:var(--muted2);border-radius:1px;width:3px;}
+.sig span:nth-child(1){height:4px}.sig span:nth-child(2){height:7px}.sig span:nth-child(3){height:10px}.sig span:nth-child(4){height:13px}
+.wifi{font-size:11px;color:var(--muted2);font-weight:800;}
+.battery{width:22px;height:11px;border:1.5px solid var(--muted2);border-radius:2px;position:relative;padding:1.5px;}
+.battery::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:var(--muted2);border-radius:0 2px 2px 0;}
+.batt-fill{background:var(--muted2);border-radius:1px;height:100%;width:70%;}
+.app-header{padding:10px 20px 8px;display:flex;align-items:center;justify-content:space-between;}
+.app-name{font-size:26px;font-weight:900;letter-spacing:-.5px;}
+.app-name span{color:var(--green);}
+.header-badge{background:var(--green-dim);color:var(--green);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;}
+.content{flex:1;overflow-y:auto;padding:0 14px;-webkit-overflow-scrolling:touch;}
+.content::-webkit-scrollbar{display:none;}
+.section{display:none;}
+.section.active{display:block;animation:up .2s ease;}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--card);border-radius:var(--r-lg);padding:16px;margin-bottom:10px;border:1px solid var(--border);}
+.card-label{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px;}
+.field{display:flex;flex-direction:column;gap:4px;}
+.field label{font-size:10px;font-weight:700;color:var(--muted2);}
+input[type=number],input[type=text],select{background:var(--card2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 11px;color:var(--text);font-family:var(--font);font-size:13px;font-weight:700;outline:none;width:100%;transition:border-color .15s;-moz-appearance:textfield;}
+input:focus,select:focus{border-color:var(--blue);}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;}
+select option{background:var(--card2);}
+.div{border:none;border-top:1px solid var(--border);margin:11px 0;}
+.tiles2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.tiles3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px;}
+.t-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.t-val{font-size:20px;font-weight:900;line-height:1;}
+.t-val.sm{font-size:15px;}
+.cg{color:var(--green)}.cr{color:var(--red)}.cb{color:var(--blue)}.cy{color:var(--yellow)}.cp{color:var(--purple)}.co{color:var(--orange)}
+.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;}
+.pg{background:var(--green-dim);color:var(--green)}
+.pr{background:var(--red-dim);color:var(--red)}
+.pb{background:var(--blue-dim);color:var(--blue)}
+.py{background:var(--yellow-dim);color:var(--yellow)}
+.pp{background:var(--purple-dim);color:var(--purple)}
+.po{background:var(--orange-dim);color:var(--orange)}
+.ibox{border-radius:var(--r-sm);padding:11px 13px;font-size:12px;font-weight:600;line-height:1.5;margin-bottom:10px;}
+.ib-g{background:var(--green-dim);color:var(--green)}
+.ib-r{background:var(--red-dim);color:var(--red)}
+.ib-b{background:var(--blue-dim);color:var(--blue)}
+.ib-y{background:var(--yellow-dim);color:var(--yellow)}
+.ib-p{background:var(--purple-dim);color:var(--purple)}
+.ib-o{background:var(--orange-dim);color:var(--orange)}
+.prog{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;margin-top:7px;}
+.prog-f{height:100%;border-radius:3px;transition:width .4s;}
+.btn-main{width:100%;background:var(--blue);color:#fff;border:none;border-radius:var(--r-sm);padding:13px;font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:6px;}
+.btn-main:active{opacity:.85;transform:scale(.98);}
+.btn-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;}
+.btn-del:active{color:var(--red);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;color:var(--muted);font-weight:700;font-size:10px;letter-spacing:.8px;text-transform:uppercase;padding:5px 7px;border-bottom:1px solid var(--border);}
+td{padding:9px 7px;border-bottom:1px solid var(--border);font-weight:600;}
+tr:last-child td{border-bottom:none;}
+.sess-row{display:flex;align-items:flex-start;gap:10px;background:var(--card2);border-radius:var(--r-sm);padding:11px 12px;margin-bottom:8px;border:1.5px solid var(--border);transition:border-color .3s;}
+.sess-row.on{border-color:rgba(34,197,94,.3);}
+.sess-row.warn{border-color:rgba(239,68,68,.3);}
+.sess-row.overlap{border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.05);}
+.sess-icon{font-size:20px;flex-shrink:0;padding-top:1px;}
+.sess-info{flex:1;min-width:0;}
+.sess-name{font-size:13px;font-weight:800;margin-bottom:2px;}
+.sess-time{font-size:11px;color:var(--muted2);font-weight:600;}
+.sess-desc{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600;line-height:1.4;}
+.clock-big{font-size:38px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.clock-date{font-size:12px;font-weight:700;color:var(--muted2);margin-top:3px;margin-bottom:14px;}
+.tax-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;}
+.tax-row:last-child{border-bottom:none;}
+.tax-lbl{color:var(--muted2);}
+.tax-val{color:var(--red);font-weight:800;}
+.tax-pct{color:var(--muted);font-size:11px;font-weight:700;margin-right:6px;}
+.tax-row.ttl .tax-lbl{color:var(--text);font-weight:800;font-size:14px;}
+.tax-row.ttl .tax-val{font-size:16px;}
+.section-title{font-size:17px;font-weight:900;margin-bottom:12px;letter-spacing:-.3px;}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px;}
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 14px;cursor:pointer;transition:transform .12s,background .12s;display:flex;flex-direction:column;gap:7px;}
+.qcard:active{transform:scale(.97);background:var(--card2);}
+.qc-icon{font-size:24px;}
+.qc-name{font-size:14px;font-weight:800;}
+.qc-desc{font-size:11px;color:var(--muted2);font-weight:600;line-height:1.4;}
+/* overlap banner */
+.overlap-banner{background:rgba(249,115,22,.12);border:1.5px solid rgba(249,115,22,.4);border-radius:var(--r-sm);padding:10px 13px;margin-bottom:8px;display:flex;align-items:flex-start;gap:9px;}
+.ob-icon{font-size:18px;flex-shrink:0;}
+.ob-text{font-size:12px;font-weight:700;color:var(--orange);line-height:1.5;}
+.ob-sub{font-size:11px;font-weight:600;color:rgba(249,115,22,.7);margin-top:2px;}
+/* session timeline */
+.timeline{position:relative;margin:8px 0 14px;}
+.tl-track{height:8px;background:var(--card2);border-radius:4px;overflow:hidden;position:relative;}
+.tl-seg{position:absolute;top:0;height:100%;border-radius:0;}
+.tl-labels{display:flex;justify-content:space-between;margin-top:4px;}
+.tl-label{font-size:9px;color:var(--muted);font-weight:700;}
+/* bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;max-width:420px;margin:0 auto;background:rgba(15,17,23,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:100;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 0;cursor:pointer;transition:all .15s;border:none;background:none;color:var(--muted);font-family:var(--font);}
+.nav-btn.active{color:var(--green);}
+.nav-ico{font-size:19px;}
+.nav-lbl{font-size:9px;font-weight:800;letter-spacing:.3px;}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:1px;}
 </style>
 </head>
 <body>
 <div class="phone">
-
   <div class="status-bar">
     <div class="status-time" id="st">9:41</div>
     <div class="status-icons">
       <div class="sig"><span></span><span></span><span></span><span></span></div>
-      <div class="wifi-icon">WiFi</div>
+      <div class="wifi">WiFi</div>
       <div class="battery"><div class="batt-fill"></div></div>
     </div>
   </div>
-
   <div class="app-header">
     <div class="app-name">Trade<span>Kit</span></div>
-    <div class="header-badge">КРИПТО 24/7</div>
+    <div class="header-badge">MONTREAL 🇨🇦</div>
   </div>
 
   <div class="content">
@@ -127,8 +146,8 @@ tr:last-child td { border-bottom:none; }
     <!-- HOME -->
     <div id="s-home" class="section active">
       <div style="font-size:20px;font-weight:900;margin-bottom:3px;">Привет, трейдер 👋</div>
-      <div style="font-size:13px;color:var(--muted2);font-weight:600;margin-bottom:14px;">Депозит $300 · Спот · CATI</div>
-      <div class="card" style="background:linear-gradient(135deg,#111e12,#1a1d27);border-color:rgba(34,197,94,.2);margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--muted2);font-weight:600;margin-bottom:14px;">Депозит $300 · Спот · CATI · Монреаль</div>
+      <div class="card" style="background:linear-gradient(135deg,#111e12,#1a1d27);border-color:rgba(34,197,94,.2);margin-bottom:10px;">
         <div class="t-lbl">Активная сессия сейчас</div>
         <div id="home-sess" style="font-size:14px;font-weight:800;color:var(--green);">—</div>
       </div>
@@ -137,10 +156,10 @@ tr:last-child td { border-bottom:none; }
         <div class="qcard" onclick="goTab('oco')"><div class="qc-icon">🎯</div><div class="qc-name">OCO</div><div class="qc-desc">Тейк + стоп, расчёт R:R</div></div>
         <div class="qcard" onclick="goTab('avg')"><div class="qc-icon">📊</div><div class="qc-name">Усреднение</div><div class="qc-desc">Уровни докупки</div></div>
         <div class="qcard" onclick="goTab('log')"><div class="qc-icon">📒</div><div class="qc-name">Трекер</div><div class="qc-desc">История и PnL</div></div>
-        <div class="qcard" onclick="goTab('sess')"><div class="qc-icon">🕐</div><div class="qc-name">Сессии</div><div class="qc-desc">Когда торговать</div></div>
-        <div class="qcard" onclick="goTab('earn')" style="grid-column:span 2;flex-direction:row;align-items:center;">
-          <div class="qc-icon">💰</div>
-          <div><div class="qc-name">Калькулятор зарплаты</div><div class="qc-desc">$21/час · Онтарио 2025 · нетто</div></div>
+        <div class="qcard" onclick="goTab('sess')"><div class="qc-icon">🕐</div><div class="qc-name">Сессии</div><div class="qc-desc">Перекрытия и объём</div></div>
+        <div class="qcard" onclick="goTab('earn')" style="grid-column:span 2;flex-direction:row;align-items:center;gap:12px;">
+          <div class="qc-icon" style="font-size:28px;">💰</div>
+          <div><div class="qc-name">Зарплата · Квебек 2025</div><div class="qc-desc">$21/час · QPP + QPIP + QC налог</div></div>
         </div>
       </div>
       <div class="ibox ib-b">💡 С депозитом $300 используй OCO — не более 33% на сделку, тейк +3%, стоп −1.5%</div>
@@ -218,22 +237,45 @@ tr:last-child td { border-bottom:none; }
 
     <!-- SESSIONS -->
     <div id="s-sess" class="section">
-      <div class="section-title">🕐 Сессии</div>
+      <div class="section-title">🕐 Сессии и перекрытия</div>
       <div class="card" style="text-align:center;padding:18px 16px 14px;">
         <div class="clock-big" id="sc">--:--:--</div>
         <div class="clock-date" id="sd">Загрузка...</div>
         <div id="sa-pill"></div>
       </div>
-      <div id="s-rows"></div>
+
+      <!-- Timeline -->
       <div class="card">
-        <div class="card-label">Лучшее время для крипто (ET)</div>
-        <div id="best-g"></div>
+        <div class="card-label">24ч активность крипто (ET)</div>
+        <div class="timeline">
+          <div class="tl-track" id="tl-track"></div>
+          <div class="tl-labels">
+            <span class="tl-label">12AM</span>
+            <span class="tl-label">6AM</span>
+            <span class="tl-label">12PM</span>
+            <span class="tl-label">6PM</span>
+            <span class="tl-label">12AM</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;" id="tl-legend"></div>
+      </div>
+
+      <!-- Active overlaps -->
+      <div id="overlap-area"></div>
+
+      <!-- Session rows -->
+      <div id="s-rows"></div>
+
+      <div class="card">
+        <div class="card-label">Перекрытия сессий (ET)</div>
+        <div id="overlaps-list"></div>
       </div>
     </div>
 
     <!-- EARN -->
     <div id="s-earn" class="section">
-      <div class="section-title">💰 Зарплата · Онтарио 2025</div>
+      <div class="section-title">💰 Зарплата · Квебек 2025</div>
+      <div class="ibox ib-p" style="margin-bottom:10px;">🏙️ Монреаль · Квебек: QPP 6.4% · QPIP 0.494% · EI 1.31% · QC налог до 25.75%</div>
       <div class="card">
         <div class="card-label">Параметры</div>
         <div class="row2">
@@ -259,7 +301,7 @@ tr:last-child td { border-bottom:none; }
         </div>
       </div>
       <div class="tiles3" id="e-gross"></div>
-      <div class="card"><div class="card-label">Вычеты</div><div id="e-ded"></div></div>
+      <div class="card"><div class="card-label">Вычеты (Квебек 2025)</div><div id="e-ded"></div></div>
       <div class="card" style="border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,#0d1f10,#1a1d27);">
         <div class="card-label" style="color:var(--green);">Чистый доход на руки</div>
         <div class="tiles3" id="e-net" style="margin-bottom:0;"></div>
@@ -270,126 +312,113 @@ tr:last-child td { border-bottom:none; }
   </div><!-- /content -->
 
   <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="goTab('home')" id="n-home"><span class="nav-ico">🏠</span><span class="nav-lbl">Главная</span><span class="nav-dot"></span></button>
-    <button class="nav-btn" onclick="goTab('oco')"  id="n-oco"><span class="nav-ico">🎯</span><span class="nav-lbl">OCO</span></button>
-    <button class="nav-btn" onclick="goTab('avg')"  id="n-avg"><span class="nav-ico">📊</span><span class="nav-lbl">Среднение</span></button>
-    <button class="nav-btn" onclick="goTab('log')"  id="n-log"><span class="nav-ico">📒</span><span class="nav-lbl">Трекер</span></button>
-    <button class="nav-btn" onclick="goTab('sess')" id="n-sess"><span class="nav-ico">🕐</span><span class="nav-lbl">Сессии</span></button>
-    <button class="nav-btn" onclick="goTab('earn')" id="n-earn"><span class="nav-ico">💰</span><span class="nav-lbl">Зарплата</span></button>
+    <button class="nav-btn active" onclick="goTab('home')"  id="n-home"><span class="nav-ico">🏠</span><span class="nav-lbl">Главная</span><span class="nav-dot"></span></button>
+    <button class="nav-btn"        onclick="goTab('oco')"   id="n-oco"> <span class="nav-ico">🎯</span><span class="nav-lbl">OCO</span></button>
+    <button class="nav-btn"        onclick="goTab('avg')"   id="n-avg"> <span class="nav-ico">📊</span><span class="nav-lbl">Среднение</span></button>
+    <button class="nav-btn"        onclick="goTab('log')"   id="n-log"> <span class="nav-ico">📒</span><span class="nav-lbl">Трекер</span></button>
+    <button class="nav-btn"        onclick="goTab('sess')"  id="n-sess"><span class="nav-ico">🕐</span><span class="nav-lbl">Сессии</span></button>
+    <button class="nav-btn"        onclick="goTab('earn')"  id="n-earn"><span class="nav-ico">💰</span><span class="nav-lbl">Зарплата</span></button>
   </nav>
 </div>
 
 <script>
-const TABS = ['home','oco','avg','log','sess','earn'];
-function goTab(id) {
-  TABS.forEach(t => {
+/* ── NAV ── */
+const TABS=['home','oco','avg','log','sess','earn'];
+function goTab(id){
+  TABS.forEach(t=>{
     document.getElementById('s-'+t).classList.remove('active');
-    const n = document.getElementById('n-'+t);
-    if (!n) return;
+    const n=document.getElementById('n-'+t);if(!n)return;
     n.classList.remove('active');
-    const d = n.querySelector('.nav-dot');
-    if (d) d.remove();
+    const d=n.querySelector('.nav-dot');if(d)d.remove();
   });
   document.getElementById('s-'+id).classList.add('active');
-  const nb = document.getElementById('n-'+id);
-  if (nb) {
-    nb.classList.add('active');
-    const d = document.createElement('span');
-    d.className = 'nav-dot';
-    nb.appendChild(d);
-  }
-  document.querySelector('.content').scrollTop = 0;
+  const nb=document.getElementById('n-'+id);
+  if(nb){nb.classList.add('active');const d=document.createElement('span');d.className='nav-dot';nb.appendChild(d);}
+  document.querySelector('.content').scrollTop=0;
 }
+function updateST(){const n=new Date(),h=n.getHours(),m=n.getMinutes();document.getElementById('st').textContent=(h%12||12)+':'+String(m).padStart(2,'0');}
+setInterval(updateST,15000);updateST();
 
-function updateST() {
-  const n = new Date(), h = n.getHours(), m = n.getMinutes();
-  document.getElementById('st').textContent = (h%12||12)+':'+String(m).padStart(2,'0');
-}
-setInterval(updateST, 15000); updateST();
-
-/* OCO */
-function calcOCO() {
-  const dep = +document.getElementById('o-dep').value||0;
-  const pct = +document.getElementById('o-pct').value||33;
-  const ent = +document.getElementById('o-entry').value||1;
-  const tp  = +document.getElementById('o-tp').value||3;
-  const sl  = +document.getElementById('o-sl').value||1.5;
-  const coin = document.getElementById('o-coin').value||'—';
-  const sz = +(dep*pct/100).toFixed(2);
-  const tpP = +(ent*(1+tp/100)).toFixed(6);
-  const slP = +(ent*(1-sl/100)).toFixed(6);
-  const pr = +(sz*tp/100).toFixed(2);
-  const ls = +(sz*sl/100).toFixed(2);
-  const rr = +(tp/sl).toFixed(2);
-  const qty = +(sz/ent).toFixed(2);
-  const res = +(dep-sz).toFixed(2);
-  const good = rr >= 1.5;
-
-  document.getElementById('ot1').innerHTML = `
+/* ── OCO ── */
+function calcOCO(){
+  const dep=+document.getElementById('o-dep').value||0;
+  const pct=+document.getElementById('o-pct').value||33;
+  const ent=+document.getElementById('o-entry').value||1;
+  const tp=+document.getElementById('o-tp').value||3;
+  const sl=+document.getElementById('o-sl').value||1.5;
+  const coin=document.getElementById('o-coin').value||'—';
+  const sz=+(dep*pct/100).toFixed(2);
+  const tpP=+(ent*(1+tp/100)).toFixed(6);
+  const slP=+(ent*(1-sl/100)).toFixed(6);
+  const pr=+(sz*tp/100).toFixed(2);
+  const ls=+(sz*sl/100).toFixed(2);
+  const rr=+(tp/sl).toFixed(2);
+  const qty=+(sz/ent).toFixed(2);
+  const res=+(dep-sz).toFixed(2);
+  const good=rr>=1.5;
+  document.getElementById('ot1').innerHTML=`
     <div class="tile"><div class="t-lbl">Позиция</div><div class="t-val cb">$${sz}</div></div>
     <div class="tile"><div class="t-lbl">${coin} кол-во</div><div class="t-val sm">${qty}</div></div>`;
-  document.getElementById('ot2').innerHTML = `
-    <div class="tile"><div class="t-lbl">Тейк $</div><div class="t-val sm cg">$${tpP}</div></div>
-    <div class="tile"><div class="t-lbl">Стоп $</div><div class="t-val sm cr">$${slP}</div></div>
+  document.getElementById('ot2').innerHTML=`
+    <div class="tile"><div class="t-lbl">Цена тейка</div><div class="t-val sm cg">$${tpP}</div></div>
+    <div class="tile"><div class="t-lbl">Цена стопа</div><div class="t-val sm cr">$${slP}</div></div>
     <div class="tile"><div class="t-lbl">+Прибыль</div><div class="t-val sm cg">+$${pr}</div></div>
     <div class="tile"><div class="t-lbl">-Убыток</div><div class="t-val sm cr">-$${ls}</div></div>`;
-  document.getElementById('o-rr').innerHTML = `
+  document.getElementById('o-rr').innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <span style="font-size:13px;font-weight:700;color:var(--muted2);">R:R соотношение</span>
       <span class="pill ${good?'pg':'pr'}">1 : ${rr}</span>
     </div>
     <div class="prog"><div class="prog-f" style="width:${Math.min(rr/3*100,100)}%;background:${good?'var(--green)':'var(--red)'};"></div></div>
     <div style="display:flex;justify-content:space-between;margin-top:9px;font-size:12px;font-weight:700;color:var(--muted);">
-      <span>Резерв: <span class="cy">$${res}</span></span>
-      <span>${good?'✅ Хорошее':'⚠️ Улучши'}</span>
+      <span>Резерв: <span class="cy">$${res}</span></span><span>${good?'✅ Хорошее':'⚠️ Улучши'}</span>
     </div>`;
-  document.getElementById('o-tip').innerHTML = good
-    ? `<div class="ibox ib-g">✅ Нужно ${Math.ceil(sl/tp)} прибыльных сделки чтобы покрыть 1 убыточную.</div>`
-    : `<div class="ibox ib-r">⚠️ R:R ниже 1:1.5 — увеличь тейк или уменьши стоп.</div>`;
+  document.getElementById('o-tip').innerHTML=good
+    ?`<div class="ibox ib-g">✅ Нужно ${Math.ceil(sl/tp)} прибыльных сделки чтобы покрыть 1 убыточную.</div>`
+    :`<div class="ibox ib-r">⚠️ R:R ниже 1:1.5 — увеличь тейк или уменьши стоп.</div>`;
 }
 
-/* AVG */
-function calcAVG() {
-  const dep = +document.getElementById('a-dep').value||300;
-  const lev = +document.getElementById('a-lev').value||4;
-  const ent = +document.getElementById('a-ent').value||1;
-  const stp = +document.getElementById('a-stp').value||5;
-  const tp  = +document.getElementById('a-tp').value||3;
-  const dist = document.getElementById('a-dist').value;
-  let w = [];
-  for (let i=0;i<lev;i++) w.push(dist==='equal'?1:i+1);
-  const tw = w.reduce((a,b)=>a+b,0);
-  const amts = w.map(x=>dep*x/tw);
+/* ── AVG ── */
+function calcAVG(){
+  const dep=+document.getElementById('a-dep').value||300;
+  const lev=+document.getElementById('a-lev').value||4;
+  const ent=+document.getElementById('a-ent').value||1;
+  const stp=+document.getElementById('a-stp').value||5;
+  const tp=+document.getElementById('a-tp').value||3;
+  const dist=document.getElementById('a-dist').value;
+  let w=[];for(let i=0;i<lev;i++)w.push(dist==='equal'?1:i+1);
+  const tw=w.reduce((a,b)=>a+b,0);
+  const amts=w.map(x=>dep*x/tw);
   let rows='',tc=0,tq=0;
-  for (let i=0;i<lev;i++) {
-    const p = +(ent*Math.pow(1-stp/100,i)).toFixed(6);
-    const q = +(amts[i]/p).toFixed(2);
-    const a = +amts[i].toFixed(2);
-    tc+=amts[i]; tq+=q;
+  for(let i=0;i<lev;i++){
+    const p=+(ent*Math.pow(1-stp/100,i)).toFixed(6);
+    const q=+(amts[i]/p).toFixed(2);
+    const a=+amts[i].toFixed(2);
+    tc+=amts[i];tq+=q;
     rows+=`<tr><td style="color:var(--muted2);font-weight:800;">${i+1}</td><td class="cb">$${p}</td><td>$${a}</td><td style="color:var(--muted2);">${q}</td></tr>`;
   }
-  const avg = +(tc/tq).toFixed(6);
-  const tpP = +(avg*(1+tp/100)).toFixed(6);
-  const prf = +(tq*(tpP-avg)).toFixed(2);
-  document.getElementById('a-tbl').innerHTML = `<table><thead><tr><th>#</th><th>Цена</th><th>Сумма</th><th>Кол-во</th></tr></thead><tbody>${rows}</tbody></table>`;
-  document.getElementById('a-tiles').innerHTML = `
+  const avg=+(tc/tq).toFixed(6);
+  const tpP=+(avg*(1+tp/100)).toFixed(6);
+  const prf=+(tq*(tpP-avg)).toFixed(2);
+  document.getElementById('a-tbl').innerHTML=`<table><thead><tr><th>#</th><th>Цена</th><th>Сумма</th><th>Кол-во</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('a-tiles').innerHTML=`
     <div class="tile"><div class="t-lbl">Средняя</div><div class="t-val sm cb">$${avg}</div></div>
     <div class="tile"><div class="t-lbl">Тейк</div><div class="t-val sm cg">$${tpP}</div></div>
     <div class="tile"><div class="t-lbl">Вложено</div><div class="t-val sm cy">$${+tc.toFixed(2)}</div></div>
     <div class="tile"><div class="t-lbl">Прибыль</div><div class="t-val sm cg">+$${prf}</div></div>`;
 }
 
-/* LOG */
-let trades = [];
-function addTrade() {
-  const coin = document.getElementById('t-coin').value.trim();
-  const ent  = +document.getElementById('t-ent').value;
-  const amt  = +document.getElementById('t-amt').value;
-  const tp   = +document.getElementById('t-tp').value||null;
-  const sl   = +document.getElementById('t-sl').value||null;
-  const rv   = document.getElementById('t-res').value;
-  const res  = rv!==''?+rv:null;
-  if (!coin||!ent||!amt) return;
+/* ── TRACKER ── */
+let trades=[];
+function addTrade(){
+  const coin=document.getElementById('t-coin').value.trim();
+  const ent=+document.getElementById('t-ent').value;
+  const amt=+document.getElementById('t-amt').value;
+  const tp=+document.getElementById('t-tp').value||null;
+  const sl=+document.getElementById('t-sl').value||null;
+  const rv=document.getElementById('t-res').value;
+  const res=rv!==''?+rv:null;
+  if(!coin||!ent||!amt)return;
   trades.unshift({id:Date.now(),coin,ent,amt,tp,sl,res,date:new Date().toLocaleDateString('ru-RU')});
   document.getElementById('t-res').value='';
   renderLog();
@@ -414,24 +443,76 @@ function renderLog(){
   document.getElementById('l-tbl').innerHTML=`<table><thead><tr><th>Монета</th><th>Сумма</th><th>Результат</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-/* SESSIONS */
-const SESS = [
-  {name:'Азиатская активность',icon:'🌏',o:20,c:4, desc:'Объём низкий. Ставь стопы шире.', col:'var(--blue)', cls:''},
-  {name:'Европейское открытие',icon:'🌍',o:3, c:8, desc:'Объём растёт. Двигаются BTC и топ-альты.', col:'var(--yellow)', cls:''},
-  {name:'Нью-Йорк открытие 🔥',icon:'🌎',o:8, c:12,desc:'Макс. объём! Лучшее время для OCO на CATI.', col:'var(--green)', cls:'on'},
-  {name:'Дневная сессия NY',    icon:'🌎',o:12,c:17,desc:'Умеренная активность. Продолжение тренда.', col:'var(--green)', cls:''},
-  {name:'Мёртвая зона ⚠️',      icon:'🌙',o:17,c:20,desc:'Низкий объём. Ложные движения. Не торгуй!', col:'var(--red)',   cls:'warn'},
+/* ── SESSIONS ── */
+// Crypto activity periods + overlaps, all in ET (Montreal = ET)
+const SESS=[
+  {name:'Азиатская активность', icon:'🌏', o:20, c:4,  desc:'Объём низкий. Ставь стопы шире. Альты двигаются хаотично.', col:'var(--blue)',   cls:'', hot:false},
+  {name:'Европейское открытие', icon:'🌍', o:3,  c:8,  desc:'Объём растёт. BTC и крупные альты начинают движение.',     col:'var(--yellow)', cls:'', hot:false},
+  {name:'Нью-Йорк открытие',    icon:'🌎', o:8,  c:12, desc:'Максимальный объём дня! Лучшее время для OCO на CATI.',    col:'var(--green)',  cls:'on', hot:true},
+  {name:'Дневная сессия NY',     icon:'🌎', o:12, c:17, desc:'Умеренная активность. Продолжение или боковик.',            col:'var(--green)',  cls:'', hot:false},
+  {name:'Мёртвая зона',          icon:'🌙', o:17, c:20, desc:'Низкий объём. Много ложных движений. Не торгуй!',           col:'var(--red)',    cls:'warn', hot:false},
 ];
-const BEST=[
-  {l:'Лучшее',   t:'8:00–12:00 ET', n:'Открытие NY', c:'pg'},
-  {l:'Хорошее',  t:'3:00–8:00 ET',  n:'Европа',      c:'py'},
-  {l:'Осторожно',t:'20:00–3:00 ET', n:'Азия',         c:'pb'},
-  {l:'Избегать', t:'17:00–20:00 ET',n:'Мёртвая зона', c:'pr'},
+
+// Overlaps between sessions (all ET)
+const OVERLAPS=[
+  {
+    name:'🔥 Европа + Нью-Йорк',
+    o:8, c:12,
+    col:'var(--orange)',
+    cls:'po',
+    desc:'Самый горячий период! Оба рынка активны одновременно.',
+    detail:'Максимальная ликвидность, минимальные спреды. Лучшее время для CATI и любых альтов.',
+    vol:'⚡⚡⚡ Очень высокий'
+  },
+  {
+    name:'🌏 Азия + Европа',
+    o:3, c:4,
+    col:'var(--yellow)',
+    cls:'py',
+    desc:'Короткое перекрытие Токио и Лондона.',
+    detail:'Рост волатильности при открытии Европы. Хорошо для BTC.',
+    vol:'⚡⚡ Средний'
+  },
 ];
+
 function isOn(o,c,h){return o<c?h>=o&&h<c:h>=o||h<c;}
 function ppct(o,c,h,m){const tot=o<c?(c-o)*60:(24-o+c)*60;const el=o<c?(h-o)*60+m:h>=o?(h-o)*60+m:(24-o+h)*60+m;return Math.max(0,Math.min(100,Math.round(el/tot*100)));}
 function fh(h){return`${h%12||12}:00 ${h>=12?'PM':'AM'}`;}
 function p2(n){return String(n).padStart(2,'0');}
+
+function buildTimeline(h){
+  // build 24h colored segments
+  // colors per hour
+  const colors=Array(24).fill('rgba(255,255,255,0.05)');
+  // Asia: 20-24 + 0-4
+  for(let i=20;i<24;i++)colors[i]='rgba(59,130,246,0.35)';
+  for(let i=0;i<4;i++)colors[i]='rgba(59,130,246,0.35)';
+  // Europe: 3-8
+  for(let i=3;i<8;i++)colors[i]='rgba(245,158,11,0.35)';
+  // NY: 8-17
+  for(let i=8;i<17;i++)colors[i]='rgba(34,197,94,0.35)';
+  // Dead: 17-20
+  for(let i=17;i<20;i++)colors[i]='rgba(239,68,68,0.25)';
+  // Overlap EU+NY: 8-12 → orange
+  for(let i=8;i<12;i++)colors[i]='rgba(249,115,22,0.6)';
+  // Overlap Asia+EU: 3-4
+  colors[3]='rgba(245,158,11,0.55)';
+
+  let segs='';
+  for(let i=0;i<24;i++){
+    const left=(i/24*100).toFixed(2);
+    const w=(100/24).toFixed(2);
+    segs+=`<div class="tl-seg" style="left:${left}%;width:${w}%;background:${colors[i]};${i===h?'outline:1.5px solid #fff;z-index:2;':''}" title="${i}:00"></div>`;
+  }
+  document.getElementById('tl-track').innerHTML=segs;
+  document.getElementById('tl-legend').innerHTML=`
+    <span style="font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(249,115,22,.6);display:inline-block;"></span>Перекрытие 🔥</span>
+    <span style="font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(34,197,94,.35);display:inline-block;"></span>Нью-Йорк</span>
+    <span style="font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(245,158,11,.35);display:inline-block;"></span>Европа</span>
+    <span style="font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(59,130,246,.35);display:inline-block;"></span>Азия</span>
+    <span style="font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(239,68,68,.25);display:inline-block;"></span>Мёртвая зона</span>
+  `;
+}
 
 function renderSess(){
   const now=new Date();
@@ -440,72 +521,155 @@ function renderSess(){
   document.getElementById('sc').textContent=`${p2(h%12||12)}:${p2(m)}:${p2(s)} ${h>=12?'PM':'AM'}`;
   const days=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
   const mo=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-  document.getElementById('sd').textContent=`${days[et.getDay()]}, ${et.getDate()} ${mo[et.getMonth()]} · Торонто`;
-  let aName='—', aCol='var(--muted)';
+  document.getElementById('sd').textContent=`${days[et.getDay()]}, ${et.getDate()} ${mo[et.getMonth()]} · Монреаль ET`;
+
+  buildTimeline(h);
+
+  // Active overlaps
+  const activeOverlaps=OVERLAPS.filter(ov=>isOn(ov.o,ov.c,h));
+  let ovHtml='';
+  activeOverlaps.forEach(ov=>{
+    const pct=ppct(ov.o,ov.c,h,m);
+    ovHtml+=`<div class="overlap-banner">
+      <div class="ob-icon">🔥</div>
+      <div>
+        <div class="ob-text">${ov.name} — СЕЙЧАС АКТИВНО</div>
+        <div class="ob-sub">${ov.detail}</div>
+        <div class="ob-sub">Объём: ${ov.vol}</div>
+        <div class="prog" style="margin-top:6px;"><div class="prog-f" style="width:${pct}%;background:var(--orange);"></div></div>
+        <div style="font-size:10px;color:var(--orange);margin-top:3px;font-weight:700;">${fh(ov.o)} — ${fh(ov.c)} ET · ${pct}% прошло</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('overlap-area').innerHTML=ovHtml;
+
+  // Session rows
+  let aName='—';
   let rows='';
   SESS.forEach(sess=>{
     const on=isOn(sess.o,sess.c,h);
     const pct=on?ppct(sess.o,sess.c,h,m):0;
-    if(on){aName=sess.name;aCol=sess.col;}
-    rows+=`<div class="sess-row ${on?sess.cls:''}">
+    if(on){aName=sess.name;}
+    // check if overlap active in this session
+    const inOverlap=activeOverlaps.some(ov=>isOn(ov.o,ov.c,h)&&on);
+    rows+=`<div class="sess-row ${on?(inOverlap?'overlap':sess.cls):''}">
       <div class="sess-icon">${sess.icon}</div>
       <div class="sess-info">
-        <div class="sess-name" style="color:${on?sess.col:'var(--text)'};">${sess.name}</div>
+        <div class="sess-name" style="color:${on?(inOverlap?'var(--orange)':sess.col):'var(--text)'};">${sess.name}${sess.hot&&on?' 🔥':''}</div>
         <div class="sess-time">${fh(sess.o)} — ${fh(sess.c)} ET</div>
-        ${on?`<div class="prog" style="margin-top:5px;"><div class="prog-f" style="width:${pct}%;background:${sess.col};"></div></div>`:''}
+        ${on?`<div class="prog" style="margin-top:5px;"><div class="prog-f" style="width:${pct}%;background:${inOverlap?'var(--orange)':sess.col};"></div></div>`:''}
         <div class="sess-desc">${sess.desc}</div>
       </div>
-      <span class="pill ${on?'pg':'pr'}" style="flex-shrink:0;">${on?'NOW':'—'}</span>
+      <span class="pill ${on?(inOverlap?'po':'pg'):'pr'}" style="flex-shrink:0;">${on?'NOW':'—'}</span>
     </div>`;
   });
   document.getElementById('s-rows').innerHTML=rows;
-  document.getElementById('sa-pill').innerHTML=`<span class="pill pg" style="font-size:12px;padding:5px 14px;">${aName}</span>`;
-  document.getElementById('best-g').innerHTML=BEST.map(b=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
-      <div><div style="font-size:13px;font-weight:800;">${b.t}</div><div style="font-size:11px;color:var(--muted);font-weight:600;">${b.n}</div></div>
-      <span class="pill ${b.c}">${b.l}</span>
-    </div>`).join('');
+  document.getElementById('sa-pill').innerHTML=`<span class="pill ${activeOverlaps.length?'po':'pg'}" style="font-size:12px;padding:5px 14px;">${activeOverlaps.length?'🔥 '+activeOverlaps[0].name:aName}</span>`;
+
+  // Overlaps list (always)
+  document.getElementById('overlaps-list').innerHTML=OVERLAPS.map(ov=>{
+    const active=isOn(ov.o,ov.c,h);
+    return `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-size:13px;font-weight:800;color:${active?'var(--orange)':'var(--text)'};">${ov.name}</div>
+        <div style="font-size:11px;color:var(--muted2);font-weight:600;margin-top:2px;">${fh(ov.o)} — ${fh(ov.c)} ET</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;">${ov.desc}</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;">Объём: ${ov.vol}</div>
+      </div>
+      <span class="pill ${active?'po':'pb'}" style="flex-shrink:0;margin-left:8px;">${active?'СЕЙЧАС':'—'}</span>
+    </div>`;
+  }).join('');
+
   const he=document.getElementById('home-sess');
-  if(he) he.textContent=aName+' · '+fh(h)+' ET';
+  if(he)he.textContent=(activeOverlaps.length?'🔥 '+activeOverlaps[0].name:aName)+' · '+p2(h)+':'+p2(m)+' ET';
 }
 
-/* EARN */
+/* ── EARN — Quebec 2025 ── */
 function calcEarn(){
   const rate=+document.getElementById('e-rate').value||21;
   const hrs=+document.getElementById('e-hrs').value||8;
   const days=+document.getElementById('e-days').value||5;
   const isSelf=document.getElementById('e-type').value==='self';
   const hpw=hrs*days, gW=rate*hpw, gM=gW*52/12, gY=gW*52;
-  function fedT(inc){let rem=Math.max(0,inc-16129),tax=0;for(const[sz,r]of[[57375,.145],[57375,.205],[63124,.26],[75000,.29],[Infinity,.33]]){if(rem<=0)break;const c=Math.min(rem,sz);tax+=c*r;rem-=c;}return tax;}
-  function ontT(inc){let rem=Math.max(0,inc-12747),tax=0;for(const[sz,r]of[[51446,.0505],[51448,.0915],[47106,.1116],[70000,.1216],[Infinity,.1316]]){if(rem<=0)break;const c=Math.min(rem,sz);tax+=c*r;rem-=c;}return tax;}
-  const cpp=Math.min(Math.max(0,gY-3500),71300-3500)*(isSelf?.119:.0595);
-  const ei=isSelf?0:Math.min(gY,65700)*.0164;
-  const ft=fedT(Math.max(0,gY-(isSelf?cpp*.5:0)));
-  const ot=ontT(Math.max(0,gY-(isSelf?cpp*.5:0)));
-  const tot=cpp+ei+ft+ot;
+
+  // Federal tax (with Quebec 16.5% abatement)
+  function fedTaxQC(income){
+    let rem=Math.max(0,income-16129),tax=0;
+    for(const[sz,r]of[[57375,.145],[57375,.205],[63124,.26],[75000,.29],[Infinity,.33]]){
+      if(rem<=0)break;const c=Math.min(rem,sz);tax+=c*r;rem-=c;
+    }
+    // Apply 16.5% Quebec abatement on basic federal tax
+    return tax*0.835;
+  }
+
+  // Quebec provincial tax 2025
+  // Brackets: 14% / 19% / 24% / 25.75%
+  // BPA: $18,571
+  function qcTax(income){
+    let rem=Math.max(0,income-18571),tax=0;
+    for(const[sz,r]of[[53255,.14],[53255,.19],[20000,.24],[Infinity,.2575]]){
+      if(rem<=0)break;const c=Math.min(rem,sz);tax+=c*r;rem-=c;
+    }
+    return tax;
+  }
+
+  // QPP 2025: 6.4% employee on earnings $3,500–$71,300
+  // Self: 12.8% (both sides)
+  function qppCalc(income,isSelf){
+    const r=isSelf?0.128:0.064;
+    return Math.min(Math.max(0,income-3500),71300-3500)*r;
+  }
+
+  // EI 2025 Quebec: 1.31% on up to $65,700 (reduced rate, Quebec has QPIP)
+  function eiCalc(income,isSelf){
+    if(isSelf)return 0;
+    return Math.min(income,65700)*0.0131;
+  }
+
+  // QPIP 2025: 0.494% on up to $98,000 (employee)
+  // Self: 0.878%
+  function qpipCalc(income,isSelf){
+    return Math.min(income,98000)*(isSelf?0.00878:0.00494);
+  }
+
+  const qpp=qppCalc(gY,isSelf);
+  const ei=eiCalc(gY,isSelf);
+  const qpip=qpipCalc(gY,isSelf);
+  // QPP half deductible for self
+  const qppDed=isSelf?qpp*0.5:0;
+  const taxable=Math.max(0,gY-qppDed);
+  const ft=fedTaxQC(taxable);
+  const qt=qcTax(taxable);
+  const tot=qpp+ei+qpip+ft+qt;
   const nY=gY-tot,nM=nY/12,nW=nY/52;
   const eff=gY>0?Math.round(tot/gY*100):0;
   const fmt=n=>'$'+Math.round(n).toLocaleString('en-CA');
+
   document.getElementById('e-gross').innerHTML=`
-    <div class="tile"><div class="t-lbl">Нед (брутто)</div><div class="t-val sm cb">${fmt(gW)}</div></div>
-    <div class="tile"><div class="t-lbl">Мес (брутто)</div><div class="t-val sm cb">${fmt(gM)}</div></div>
-    <div class="tile"><div class="t-lbl">Год (брутто)</div><div class="t-val sm cb">${fmt(gY)}</div></div>`;
+    <div class="tile"><div class="t-lbl">Неделя</div><div class="t-val sm cb">${fmt(gW)}</div></div>
+    <div class="tile"><div class="t-lbl">Месяц</div><div class="t-val sm cb">${fmt(gM)}</div></div>
+    <div class="tile"><div class="t-lbl">Год</div><div class="t-val sm cb">${fmt(gY)}</div></div>`;
+
   document.getElementById('e-ded').innerHTML=`
-    <div class="tax-row"><span class="tax-lbl">Федеральный налог</span><div><span class="tax-pct">${(ft/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(ft)}</span></div></div>
-    <div class="tax-row"><span class="tax-lbl">Провинц. налог (ON)</span><div><span class="tax-pct">${(ot/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(ot)}</span></div></div>
-    <div class="tax-row"><span class="tax-lbl">CPP${isSelf?' ×2':''}</span><div><span class="tax-pct">${(cpp/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(cpp)}</span></div></div>
-    ${!isSelf?`<div class="tax-row"><span class="tax-lbl">EI (страхование)</span><div><span class="tax-pct">${(ei/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(ei)}</span></div></div>`:''}
+    <div class="tax-row"><span class="tax-lbl">Федеральный налог (−16.5% QC)</span><div><span class="tax-pct">${(ft/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(ft)}</span></div></div>
+    <div class="tax-row"><span class="tax-lbl">Провинц. налог Квебека</span><div><span class="tax-pct">${(qt/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(qt)}</span></div></div>
+    <div class="tax-row"><span class="tax-lbl">QPP${isSelf?' ×2':''} (пенсия QC)</span><div><span class="tax-pct">${(qpp/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(qpp)}</span></div></div>
+    ${!isSelf?`<div class="tax-row"><span class="tax-lbl">EI (Quebec, сниженная)</span><div><span class="tax-pct">${(ei/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(ei)}</span></div></div>`:''}
+    <div class="tax-row"><span class="tax-lbl">QPIP (декрет/родители)</span><div><span class="tax-pct">${(qpip/gY*100).toFixed(1)}%</span><span class="tax-val">-${fmt(qpip)}</span></div></div>
     <div class="tax-row ttl"><span class="tax-lbl">Итого вычеты</span><div><span class="tax-pct" style="color:var(--red);">${eff}%</span><span class="tax-val" style="font-size:17px;">-${fmt(tot)}</span></div></div>`;
+
   document.getElementById('e-net').innerHTML=`
-    <div class="tile"><div class="t-lbl">Нед (нетто)</div><div class="t-val sm cg">${fmt(nW)}</div></div>
-    <div class="tile"><div class="t-lbl">Мес (нетто)</div><div class="t-val sm cg">${fmt(nM)}</div></div>
-    <div class="tile"><div class="t-lbl">Год (нетто)</div><div class="t-val sm cg">${fmt(nY)}</div></div>`;
+    <div class="tile"><div class="t-lbl">Неделя</div><div class="t-val sm cg">${fmt(nW)}</div></div>
+    <div class="tile"><div class="t-lbl">Месяц</div><div class="t-val sm cg">${fmt(nM)}</div></div>
+    <div class="tile"><div class="t-lbl">Год</div><div class="t-val sm cg">${fmt(nY)}</div></div>`;
+
   const nh=(nY/(hpw*52)).toFixed(2);
-  document.getElementById('e-tip').innerHTML=`<div class="ibox ib-b">💡 Чистая ставка в час: <strong>$${nh}</strong> · ${hpw} ч/нед · налог ${eff}%. Расчёт приблизительный — только стандартный BPA.</div>`;
+  document.getElementById('e-tip').innerHTML=`<div class="ibox ib-b">💡 Чистая ставка в час: <strong>$${nh}</strong> · ${hpw} ч/нед · налог ${eff}%.<br>Квебек: QPP вместо CPP, QPIP вместо полного EI, +QC абатмент 16.5% на федеральный налог. Расчёт приблизительный — только стандартный BPA.</div>`;
 }
 
+/* ── INIT ── */
 calcOCO(); calcAVG(); renderLog(); calcEarn();
-renderSess(); setInterval(renderSess, 1000);
+renderSess(); setInterval(renderSess,1000);
 </script>
 </body>
 </html>
